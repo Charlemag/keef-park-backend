@@ -11,7 +11,7 @@ const taskRouter = require('./routes/task.routes');
 const authRouter = require('./routes/auth.routes');
 const strainsRouter = require('./routes/strains.routes')
 const reviewRoutes = require('./routes/review.routes')
-const postRoutes  = require('./routes/post.routes')
+
 
 const PORT = process.env.PORT;
 
@@ -25,8 +25,8 @@ app.use(express.json())
 
 app.use('/auth', authRouter);
 app.use('/strains', strainsRouter)
-app.use('/routes/', reviewRoutes)
-app.use('/post/', postRoutes);
+app.use('/reviews', reviewRoutes)
+
 
 
 mongoose.connect(process.env.MONGODB_URI)
