@@ -9,6 +9,7 @@ const { isAuthenticated } = require('./middleware/jwt.middleware');
 const projectRouter = require('./routes/project.routes');
 const taskRouter = require('./routes/task.routes');
 const authRouter = require('./routes/auth.routes');
+const strainsRouter = require('./routes/strains.routes')
 
 const PORT = process.env.PORT;
 
@@ -20,9 +21,9 @@ app.use(cors({
 
 app.use(express.json())
 
-app.use('/api/projects', isAuthenticated, projectRouter);
-app.use('/api/tasks', isAuthenticated, taskRouter);
 app.use('/auth', authRouter);
+app.use('/strains', strainsRouter)
+app.use('/routes/', reviewRoutes)
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(x => {
