@@ -4,22 +4,30 @@ const Review = require('../models/Review.model');
 const Strains = require('../models/Strains.model');
 
 router.post('/:strainsId/review-create', (req, res, next) => {
-    const { author, title, content } = req.body;
+    const { title, content } = req.body;
+    const author = req.payload._id;
+    const strainsId = req.params.strainsId
 
-    Review.create({ author, title, content })
-      .then(dbPost => {
-
-    Strains.findByIdAndUpdate(req.params.strainsId, { $push: { reviews: dbPost._id } });
+    Review.create({ author, title, content, strainsId })
+      .then(createdReview => {
+        res.send(createdReview)
       })
-
       .catch(err => {
-        console.log(`Err while creating the post in the DB: ${err}`);
-
+        res.send(`Err while creating the post in the DB: ${err}`);
       });
-      
-   
+  });
 
-      
+  router.get('/:strainsId/all-reviews', (req, res, next) => {
+    const allStrains = req.params.strainsId;
+   //get strainsId from route params
+    //use review model (Review.find method) to get all reviews for that strain from database
+    //res.send reviews back to front end
+    Review.find()
+    .then(foundReviews => {
+      res.send(foundReviews)
+    })
+    .catch(err => res.send(err));
+
   });
 
  module.exports = router;

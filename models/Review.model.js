@@ -5,6 +5,7 @@ const reviewSchema = new Schema({
     author: { type: Schema.Types.ObjectId, ref: "User" },
     title: String,
     content: String,
+    strainsId: String
 });
 
 

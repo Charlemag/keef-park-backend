@@ -3,11 +3,8 @@ const Schema = mongoose.Schema;
 
 
 const strainsSchema = new Schema({
-  strain: String,
-  strainType: String,
-  goodEffects: String,
-  reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
-
+  user: { type: Schema.Types.ObjectId, ref: 'User'},
+  strainsId: String
 });
 
 const Strains = mongoose.model('Strains', strainsSchema);

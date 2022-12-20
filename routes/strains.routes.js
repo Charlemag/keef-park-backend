@@ -1,18 +1,27 @@
 const express = require ('express');
 const router = express.Router();
+const axios =  require('axios')
  
 const Strains = require('../models/Strains.model')
 
 //find all Strains
 router.get('/', (req, res, next) => {
-  Strains.find()
-  // .populate('reviews')
-    .then((foundStrains) => {
-      res.json(foundStrains)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+
+  axios.get('https://weed-strain1.p.rapidapi.com/', {
+    params: {
+      ordering: '-strain'
+    },
+    headers: {
+      'X-RapidAPI-Key': '920feeb76bmshc18b7852a84934dp1f3ea5jsn504297b8b9da',
+      'X-RapidAPI-Host': 'weed-strain1.p.rapidapi.com'
+    }
+  })
+  .then(axiosResponse => {
+    console.log(axiosResponse.data)
+    res.json(axiosResponse.data)
+  })
+  .catch(axiosError => res.send(axiosError))
+
 })
 
 router.post('/', (req, res, next) => {

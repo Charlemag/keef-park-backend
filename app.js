@@ -5,12 +5,13 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const { isAuthenticated } = require('./middleware/jwt.middleware');
+//Protects routes
 
-const projectRouter = require('./routes/project.routes');
-const taskRouter = require('./routes/task.routes');
+//const projectRouter = require('./routes/project.routes');
+//const taskRouter = require('./routes/task.routes');
 const authRouter = require('./routes/auth.routes');
 const strainsRouter = require('./routes/strains.routes')
-const reviewRoutes = require('./routes/review.routes')
+const reviewRouter = require('./routes/review.routes')
 
 
 const PORT = process.env.PORT;
@@ -23,9 +24,10 @@ app.use(cors({
 
 app.use(express.json())
 
+
+app.use('/strains', isAuthenticated, strainsRouter)
+app.use('/reviews', isAuthenticated, reviewRouter)
 app.use('/auth', authRouter);
-app.use('/strains', strainsRouter)
-app.use('/reviews', reviewRoutes)
 
 
 
