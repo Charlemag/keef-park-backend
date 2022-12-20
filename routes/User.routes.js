@@ -1,28 +1,25 @@
-// const express = require ('express');
-// const router = express.Router();
+const express = require ('express');
+const router = express.Router();
+const User = require('../models/User.model')
 
-// const User = require('../models/User.model')
+const { isAuthenticated } = require('../middleware/jwt.middleware');
 
+//Save favorite Strains in user profile
+router.post('/:strainId/add-favorite', isAuthenticated, (req, res, next) => {
 
-// //Save favorite Strains in user profile
-// router.post('/:strainId/add-favorite', (req, res, next) => {
-// User.findByIdAndUpdate(
-//     req.params.id, 
-//     {
-//         favoriteStrain: {
-//         strain: req.body.strainId,
-   
-//       }
-//     }, 
-//     {new: true}
-//     )
-//     .then((updateUser) => {
-//       console.log("This is the updated User", updateUser)
-//       res.redirect('/user')
-//     })
-//     .catch((err) => {
-//       console.log(err)
-//     })
-//   })
+  const { strainId } = req.params
 
-//   module.exports  = router;
+  User.findByIdAndUpdate(
+    req.payload._id,
+    { $addToSet: { favorites: strainId } },
+    { new: true }
+  )
+    .then((favoriteStrain) => {
+      console.log(favoriteStrain)
+      res.redirect('/user')
+    })
+    .catch((err) => res.send(err));
+     
+  })
+
+  module.exports  = router;

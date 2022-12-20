@@ -12,7 +12,7 @@ const { isAuthenticated } = require('./middleware/jwt.middleware');
 const authRouter = require('./routes/auth.routes');
 const strainsRouter = require('./routes/strains.routes')
 const reviewRouter = require('./routes/review.routes')
-
+const userRouter = require('./routes/User.routes')
 
 const PORT = process.env.PORT;
 
@@ -27,6 +27,7 @@ app.use(express.json())
 
 app.use('/strains', isAuthenticated, strainsRouter)
 app.use('/reviews', isAuthenticated, reviewRouter)
+app.use('/user', userRouter);
 app.use('/auth', authRouter);
 
 
