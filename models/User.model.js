@@ -12,7 +12,9 @@ const userSchema = new Schema({
   },
   favorites: [{ type: Schema.Types.ObjectId, ref: 'Strains'}],
 
-  name: String
+  name: String,
+
+  // reviews:[{ type: Schema.Types.ObjectId, ref:'reviews'}]
 },
   
 );

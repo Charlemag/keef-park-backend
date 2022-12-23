@@ -78,7 +78,7 @@ router.post('/login', (req, res, next) => {
       const authToken = jwt.sign(
         payload,
         process.env.TOKEN_SECRET,
-        { algorithm: 'HS256', expiresIn: '6h' }
+        { algorithm: 'HS256', expiresIn: '120h' }
       );
 
       res.json({
@@ -91,9 +91,39 @@ router.post('/login', (req, res, next) => {
 
 });
 
+router.get('/updateProfile', isAuthenticated, (req, res, next) => {
+  User.findById(req.payload._id).then(foundUser => {
+    console.log(foundUser)
+    res.json(foundUser)
+  })
+})  
+
+router.put('/updateProfile', isAuthenticated, (req, res, next) => {
+  const userId = req.payload._id
+  const { email, name } = req.body
+  console.log(email,name)
+
+  User.findOneAndUpdate(
+    { _id: userId },
+    { name: name, email: email },
+    { new: true }
+  )
+    .then((updatedUser) => res.json(updatedUser))
+    .catch((error) => res.json(error));
+})  
+
+router.delete('/updateProfile', isAuthenticated, (req, res, next) => {
+  const userId = req.payload._id
+  User.findByIdAndDelete(userId).then(deletedUser => {
+    console.log(deletedUser)
+  })
+  .catch(err => console.log(err))
+})
+
 router.get('/verify', isAuthenticated, (req, res, next) => {
   console.log(req.payload);
   res.status(200).json(req.payload);
 });
+
 
 module.exports = router;

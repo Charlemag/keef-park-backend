@@ -3,11 +3,15 @@ const router = express.Router();
 const Review = require('../models/Review.model');
 const Strains = require('../models/Strains.model');
 
+
 router.post('/:strainsId/review-create', (req, res, next) => {
     const { title, content } = req.body;
     const author = req.payload._id;
     const strainsId = req.params.strainsId
 
+    let User; 
+    
+    //Create Review
     Review.create({ author, title, content, strainsId })
       .then(createdReview => {
         res.send(createdReview)
@@ -17,6 +21,7 @@ router.post('/:strainsId/review-create', (req, res, next) => {
       });
   });
 
+  //Read(List) All
   router.get('/:strainsId/all-review', (req, res, next) => {
     const strainsId = req.params.strainsId;
    //get strainsId from route params
@@ -31,13 +36,13 @@ router.post('/:strainsId/review-create', (req, res, next) => {
     .catch(err => res.send(err));
   })
     //delete review
-    router.get('/:strainsId/delete', (req, res, next) => {
-      const strainsId = req.params.strainsId;
-      Review.findByIdAndDelete(strainsId)
+  router.get('/:reviewId/delete', (req, res, next) => {
+    const reviewId = req.params.reviewId;
+    Review.findByIdAndDelete(reviewId)
       .then(deletedReview => {
         res.send(deletedReview);
       })
       .catch(err => res.send(err));
-    });
+  });
 
  module.exports = router;
