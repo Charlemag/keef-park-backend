@@ -5,8 +5,8 @@ const axios =  require('axios')
 const Strains = require('../models/Strains.model');
 const User = require('../models/User.model');
 
-const key = '920feeb76bmshc18b7852a84934dp1f3ea5jsn504297b8b9da'
-const host = 'weed-strain1.p.rapidapi.com'
+const key = process.env.KEY
+const host = process.env.HOST
 
 //find all Strains
 router.get('/', (req, res, next) => {
